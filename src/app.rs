@@ -8,7 +8,21 @@ use cosmic::iced::{Alignment, Length, Limits, Subscription, time, window::Id};
 use cosmic::iced_winit::commands::popup::{destroy_popup, get_popup};
 use cosmic::prelude::*;
 use cosmic::widget::{self};
+use notify_rust::{Hint, Notification};
+use std::path::{Path, PathBuf};
+use std::process::Command;
 use std::time::Duration;
+
+const NOTIFICATION_SOUND_PATH_DEV: &str =
+    concat!(env!("CARGO_MANIFEST_DIR"), "/resources/sounds/cosmic-pomodoro-notification.mp3");
+const NOTIFICATION_SOUND_PATH_SYSTEM: &str =
+    "/usr/share/sounds/cosmic-pomodoro/cosmic-pomodoro-notification.mp3";
+const NOTIFICATION_ICON_PATH_DEV: &str = concat!(env!("CARGO_MANIFEST_DIR"), "/resources/icon.svg");
+const NOTIFICATION_ICON_PATH_SYSTEM: &str =
+    "/usr/share/icons/hicolor/scalable/apps/com.github.petar030.cosmic-pomodoro.svg";
+const APPLET_ICON_PATH: &str = "resources/icon-symbolic.svg";
+const APP_ICON_NAME: &str = "com.github.petar030.cosmic-pomodoro";
+const APP_ICON_SYMBOLIC_NAME: &str = "com.github.petar030.cosmic-pomodoro-symbolic";
 
 /// Dva pogleda (Main i Settings), kao u starom template-u.
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
@@ -54,7 +68,7 @@ impl Default for PomodoroTickState {
     }
 }
 
-/// Centralno stanje tajmera u jednom mestu.
+
 struct PomodoroState {
     pomodoro: Pomodoro,
     last_tick_state: Option<PomodoroTickState>,
@@ -97,10 +111,71 @@ impl PomodoroState {
     }
 
     fn refresh_state(&mut self) {
+        let previous_timer_type = self.last_tick_state.as_ref().map(|s| s.timer_type);
+
         self.last_tick_state = self
             .pomodoro
             .update_and_return_state()
             .map(PomodoroTickState::from_tuple);
+
+        let next_timer_type = self.last_tick_state.as_ref().map(|s| s.timer_type);
+        let next_remaining_seconds = self.last_tick_state.as_ref().map(|s| s.remaining);
+
+        let phase_duration_minutes = next_remaining_seconds.map(|seconds| seconds.div_ceil(60));
+
+        match (previous_timer_type, next_timer_type) {
+            (Some(TimerType::Work), Some(TimerType::Break)) => {
+                let minutes = phase_duration_minutes.unwrap_or(0);
+                self.notify(&format!(
+                    "Great work — take a well-earned {} minute break.",
+                    minutes
+                ));
+            }
+            (Some(TimerType::Break), Some(TimerType::Work)) => {
+                let minutes = phase_duration_minutes.unwrap_or(0);
+                self.notify(&format!(
+                    "Break is over — let’s focus for {} minutes.",
+                    minutes
+                ));
+            }
+            _ => {}
+        }
+    }
+
+    fn notify(&self, message: &str) {
+        let mut notification = Notification::new();
+        notification
+            .appname("Cosmic Pomodoro")
+            .summary("Pomodoro")
+            .body(message)
+            .icon(APP_ICON_NAME)
+            .hint(Hint::DesktopEntry(APP_ICON_NAME.to_string()));
+
+        if let Some(icon_path) = Self::first_existing_path(&[
+            NOTIFICATION_ICON_PATH_DEV,
+            NOTIFICATION_ICON_PATH_SYSTEM,
+        ]) {
+            notification.hint(Hint::ImagePath(icon_path));
+        }
+
+        let _ = notification.show();
+
+        if let Some(sound_path) = Self::first_existing_path(&[
+            NOTIFICATION_SOUND_PATH_DEV,
+            NOTIFICATION_SOUND_PATH_SYSTEM,
+        ]) {
+            let _ = Command::new("paplay")
+                .arg(&sound_path)
+                .spawn()
+                .or_else(|_| Command::new("aplay").arg(&sound_path).spawn());
+        }
+    }
+
+    fn first_existing_path(candidates: &[&str]) -> Option<String> {
+        candidates
+            .iter()
+            .find(|candidate| Path::new(candidate).exists())
+            .map(|candidate| (*candidate).to_string())
     }
 
 }
@@ -185,9 +260,59 @@ impl cosmic::Application for AppModel {
     }
 
     fn view(&self) -> Element<'_, Self::Message> {
+        let started = self
+            .pomodoro_state
+            .last_tick_state
+            .as_ref()
+            .map(|s| s.started)
+            .unwrap_or(false);
+
+        if !started {
+            let icon_button = std::fs::canonicalize(APPLET_ICON_PATH)
+                .ok()
+                .map(|path| {
+                    let mut icon_handle = widget::icon::from_path(PathBuf::from(path));
+                    icon_handle.symbolic = true;
+                    self.core.applet.icon_button_from_handle(icon_handle)
+                })
+                .unwrap_or_else(|| self.core.applet.icon_button(APP_ICON_SYMBOLIC_NAME));
+
+            return icon_button.on_press(Message::TogglePopup).into();
+        }
+
+        let progress = self.panel_progress_fraction();
+        let timer_type = self
+            .pomodoro_state
+            .last_tick_state
+            .as_ref()
+            .map(|s| s.timer_type)
+            .unwrap_or(TimerType::Work);
+
+        let panel_phase_icon: Element<'_, Message> = match timer_type {
+            TimerType::Work => widget::icon::from_name("alarm-symbolic").size(14).icon().into(),
+            TimerType::Break => {
+                let mut break_icon_handle = widget::icon::from_svg_bytes(
+                    include_bytes!("../resources/icons/coffee-symbolic.svg").as_slice(),
+                );
+                break_icon_handle.symbolic = true;
+                break_icon_handle.icon().size(14).into()
+            }
+        };
+
+        let panel_content = widget::column()
+            .width(Length::Fixed(18.0))
+            .align_x(Alignment::Center)
+            .spacing(1)
+            .push(panel_phase_icon)
+            .push(
+                widget::progress_bar(0.0..=1.0, progress)
+                    .height(Length::Fixed(2.0))
+                    .width(Length::Fixed(16.0)),
+            );
+
         self.core
             .applet
-            .icon_button("display-symbolic")
+            .button_from_element(panel_content, true)
             .on_press(Message::TogglePopup)
             .into()
     }
@@ -340,6 +465,35 @@ impl cosmic::Application for AppModel {
 
     fn style(&self) -> Option<cosmic::iced_runtime::Appearance> {
         Some(cosmic::applet::style())
+    }
+}
+
+impl AppModel {
+    fn panel_progress_fraction(&self) -> f32 {
+        let Some(state) = self.pomodoro_state.last_tick_state.as_ref() else {
+            return 0.0;
+        };
+
+        let total_seconds = match state.timer_type {
+            TimerType::Work => self.config.work_time.saturating_mul(60),
+            TimerType::Break => {
+                let short_break = self.config.short_break_time.saturating_mul(60);
+                let long_break = self.config.long_break_time.saturating_mul(60);
+
+                if state.remaining > short_break {
+                    long_break.max(state.remaining)
+                } else {
+                    short_break.max(state.remaining)
+                }
+            }
+        };
+
+        if total_seconds == 0 {
+            return 0.0;
+        }
+
+        let elapsed = total_seconds.saturating_sub(state.remaining);
+        (elapsed as f32 / total_seconds as f32).clamp(0.0, 1.0)
     }
 }
 
@@ -496,7 +650,7 @@ fn view_settings<'a>(
             format!("{}", config.work_time),
             config.work_time,
             5,
-            1,
+            5,
             180,
             |v| Message::Settings(SettingsMessage::SetWorkTime(v as u64)),
         ));

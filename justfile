@@ -11,6 +11,8 @@ appdata-dst := base-dir / 'share' / 'appdata' / appid + '.metainfo.xml'
 bin-dst := base-dir / 'bin' / name
 desktop-dst := base-dir / 'share' / 'applications' / appid + '.desktop'
 icon-dst := base-dir / 'share' / 'icons' / 'hicolor' / 'scalable' / 'apps' / appid + '.svg'
+icon-symbolic-dst := base-dir / 'share' / 'icons' / 'hicolor' / 'symbolic' / 'apps' / appid + '-symbolic.svg'
+sound-dst := base-dir / 'share' / 'sounds' / name / 'cosmic-pomodoro-notification.mp3'
 
 # Default recipe which runs `just build-release`
 default: build-release
@@ -56,10 +58,12 @@ install:
     install -Dm0644 resources/app.desktop {{desktop-dst}}
     install -Dm0644 resources/app.metainfo.xml {{appdata-dst}}
     install -Dm0644 resources/icon.svg {{icon-dst}}
+    install -Dm0644 resources/icon-symbolic.svg {{icon-symbolic-dst}}
+    install -Dm0644 resources/sounds/cosmic-pomodoro-notification.mp3 {{sound-dst}}
 
 # Uninstalls installed files
 uninstall:
-    rm {{bin-dst}} {{desktop-dst}} {{icon-dst}}
+    rm {{bin-dst}} {{desktop-dst}} {{icon-dst}} {{icon-symbolic-dst}} {{sound-dst}}
 
 # Vendor dependencies locally
 vendor:
