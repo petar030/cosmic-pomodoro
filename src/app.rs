@@ -20,10 +20,10 @@ const NOTIFICATION_SOUND_PATH_SYSTEM: &str =
 const NOTIFICATION_ICON_PATH_DEV: &str =
     concat!(env!("CARGO_MANIFEST_DIR"), "/resources/icon-128.png");
 const NOTIFICATION_ICON_PATH_SYSTEM: &str =
-    "/usr/share/icons/hicolor/128x128/apps/com.github.petar030.cosmic-pomodoro.png";
+    "/usr/share/icons/hicolor/128x128/apps/io.github.petar030.cosmic-pomodoro.png";
 const APPLET_ICON_PATH: &str = "resources/icon-symbolic.svg";
-const APP_ICON_NAME: &str = "com.github.petar030.cosmic-pomodoro";
-const APP_ICON_SYMBOLIC_NAME: &str = "com.github.petar030.cosmic-pomodoro-symbolic";
+const APP_ICON_NAME: &str = "io.github.petar030.cosmic-pomodoro";
+const APP_ICON_SYMBOLIC_NAME: &str = "io.github.petar030.cosmic-pomodoro-symbolic";
 
 mod views;
 
@@ -221,7 +221,7 @@ impl cosmic::Application for AppModel {
     type Flags = ();
     type Message = Message;
 
-    const APP_ID: &'static str = "com.github.petar030.cosmic-pomodoro";
+    const APP_ID: &'static str = "io.github.petar030.cosmic-pomodoro";
 
     fn core(&self) -> &cosmic::Core {
         &self.core

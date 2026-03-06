@@ -1,17 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <component type="desktop-application">
-  <id>com.github.petar030.cosmic-pomodoro</id>
+  <id>io.github.petar030.cosmic-pomodoro</id>
   <metadata_license>CC0-1.0</metadata_license>
   <project_license>MPL-2.0</project_license>
   <name>Cosmic Pomodoro</name>
-  <summary>Simple Pomodoro applet for Cosmic Desktop</summary>
+  <summary>Simple Pomodoro applet for COSMIC Desktop</summary>
+  <description>
+    <p>
+      A minimal Pomodoro timer applet for the COSMIC desktop environment.
+      Manage work and break sessions with configurable durations, session
+      indicators, and automatic phase transitions with desktop notifications.
+    </p>
+    <p>Features:</p>
+    <ul>
+      <li>Work / break timer flow with configurable durations</li>
+      <li>Start, Pause, Forward, and Restart controls</li>
+      <li>Session indicators and cycle counter in the popup</li>
+      <li>Panel icon with compact progress bar during sessions</li>
+      <li>Desktop notifications and sound on phase transition</li>
+    </ul>
+  </description>
   <icon type="remote" width="64" height="64" scale="1">
-    https://github.com/petar030/cosmic-pomodoro/raw/main/resources/icon.svg
+    https://github.com/petar030/cosmic-pomodoro/raw/master/resources/icon.svg
   </icon>
+  <url type="homepage">https://github.com/petar030/cosmic-pomodoro</url>
   <url type="vcs-browser">https://github.com/petar030/cosmic-pomodoro</url>
-  <launchable type="desktop-id">com.github.petar030.cosmic-pomodoro.desktop</launchable>
+  <url type="bugtracker">https://github.com/petar030/cosmic-pomodoro/issues</url>
+  <launchable type="desktop-id">io.github.petar030.cosmic-pomodoro.desktop</launchable>
   <provides>
-    <id>com.github.petar030.cosmic-pomodoro</id>
+    <id>io.github.petar030.cosmic-pomodoro</id>
     <binaries>
       <binary>cosmic-pomodoro</binary>
     </binaries>
@@ -25,11 +42,22 @@
     <control>touch</control>
   </supports>
   <categories>
+    <category>Utility</category>
     <category>COSMIC</category>
   </categories>
   <keywords>
     <keyword>COSMIC</keyword>
+    <keyword>pomodoro</keyword>
+    <keyword>timer</keyword>
+    <keyword>productivity</keyword>
   </keywords>
   <content_rating type="oars-1.1" />
+  <releases>
+    <release version="0.1.0" date="2026-03-06">
+      <description>
+        <p>Initial release.</p>
+      </description>
+    </release>
+  </releases>
 </component>
 

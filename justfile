@@ -1,5 +1,5 @@
 name := 'cosmic-pomodoro'
-appid := 'com.github.petar030.cosmic-pomodoro'
+appid := 'io.github.petar030.cosmic-pomodoro'
 
 rootdir := ''
 prefix := '/usr'
