@@ -9,7 +9,7 @@ use cosmic::iced_winit::commands::popup::{destroy_popup, get_popup};
 use cosmic::prelude::*;
 use cosmic::widget::{self};
 use notify_rust::{Hint, Notification};
-use std::path::{Path, PathBuf};
+use std::path::Path;
 use std::process::Command;
 use std::time::Duration;
 
@@ -17,9 +17,10 @@ const NOTIFICATION_SOUND_PATH_DEV: &str =
     concat!(env!("CARGO_MANIFEST_DIR"), "/resources/sounds/cosmic-pomodoro-notification.mp3");
 const NOTIFICATION_SOUND_PATH_SYSTEM: &str =
     "/usr/share/sounds/cosmic-pomodoro/cosmic-pomodoro-notification.mp3";
-const NOTIFICATION_ICON_PATH_DEV: &str = concat!(env!("CARGO_MANIFEST_DIR"), "/resources/icon.svg");
+const NOTIFICATION_ICON_PATH_DEV: &str =
+    concat!(env!("CARGO_MANIFEST_DIR"), "/resources/icon-128.png");
 const NOTIFICATION_ICON_PATH_SYSTEM: &str =
-    "/usr/share/icons/hicolor/scalable/apps/com.github.petar030.cosmic-pomodoro.svg";
+    "/usr/share/icons/hicolor/128x128/apps/com.github.petar030.cosmic-pomodoro.png";
 const APPLET_ICON_PATH: &str = "resources/icon-symbolic.svg";
 const APP_ICON_NAME: &str = "com.github.petar030.cosmic-pomodoro";
 const APP_ICON_SYMBOLIC_NAME: &str = "com.github.petar030.cosmic-pomodoro-symbolic";
@@ -27,16 +28,11 @@ const APP_ICON_SYMBOLIC_NAME: &str = "com.github.petar030.cosmic-pomodoro-symbol
 mod views;
 
 /// Dva pogleda (Main i Settings), kao u starom template-u.
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+#[derive(Debug, Default, Clone, Copy, PartialEq, Eq)]
 enum PopupView {
+    #[default]
     Main,
     Settings,
-}
-
-impl Default for PopupView {
-    fn default() -> Self {
-        PopupView::Main
-    }
 }
 
 /// Snapshot stanja koji vraća `update_and_return_state`.
@@ -151,22 +147,19 @@ impl PomodoroState {
     }
 
     fn notify(&self, message: &str) {
-        let mut notification = Notification::new();
-        notification
+        let icon = Self::first_existing_path(&[
+            NOTIFICATION_ICON_PATH_DEV,
+            NOTIFICATION_ICON_PATH_SYSTEM,
+        ])
+        .unwrap_or_else(|| APP_ICON_NAME.to_string());
+
+        let _ = Notification::new()
             .appname("Cosmic Pomodoro")
             .summary("Pomodoro")
             .body(message)
-            .icon(APP_ICON_NAME)
-            .hint(Hint::DesktopEntry(APP_ICON_NAME.to_string()));
-
-        if let Some(icon_path) = Self::first_existing_path(&[
-            NOTIFICATION_ICON_PATH_DEV,
-            NOTIFICATION_ICON_PATH_SYSTEM,
-        ]) {
-            notification.hint(Hint::ImagePath(icon_path));
-        }
-
-        let _ = notification.show();
+            .icon(&icon)
+            .hint(Hint::DesktopEntry(APP_ICON_NAME.to_string()))
+            .show();
 
         if let Some(sound_path) = Self::first_existing_path(&[
             NOTIFICATION_SOUND_PATH_DEV,
@@ -272,18 +265,16 @@ impl cosmic::Application for AppModel {
             .pomodoro_state
             .last_tick_state
             .as_ref()
-            .map(|s| s.started)
-            .unwrap_or(false);
+            .is_some_and(|s| s.started);
 
         if !started {
-            let icon_button = std::fs::canonicalize(APPLET_ICON_PATH)
-                .ok()
-                .map(|path| {
-                    let mut icon_handle = widget::icon::from_path(PathBuf::from(path));
-                    icon_handle.symbolic = true;
-                    self.core.applet.icon_button_from_handle(icon_handle)
-                })
-                .unwrap_or_else(|| self.core.applet.icon_button(APP_ICON_SYMBOLIC_NAME));
+            let icon_button = if let Ok(path) = std::fs::canonicalize(APPLET_ICON_PATH) {
+                let mut icon_handle = widget::icon::from_path(path);
+                icon_handle.symbolic = true;
+                self.core.applet.icon_button_from_handle(icon_handle)
+            } else {
+                self.core.applet.icon_button(APP_ICON_SYMBOLIC_NAME)
+            };
 
             return icon_button.on_press(Message::TogglePopup).into();
         }
@@ -293,8 +284,7 @@ impl cosmic::Application for AppModel {
             .pomodoro_state
             .last_tick_state
             .as_ref()
-            .map(|s| s.timer_type)
-            .unwrap_or(TimerType::Work);
+            .map_or(TimerType::Work, |s| s.timer_type);
 
         let panel_phase_icon: Element<'_, Message> = match timer_type {
             TimerType::Work => widget::icon::from_name("alarm-symbolic").size(14).icon().into(),

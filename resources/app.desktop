@@ -3,7 +3,7 @@ Name=Cosmic Pomodoro
 Comment=Simple Pomodoro applet for Cosmic Desktop
 Type=Application
 Icon=com.github.petar030.cosmic-pomodoro
-Exec=env WGPU_BACKEND=gl LIBGL_ALWAYS_SOFTWARE=1 cosmic-pomodoro %F
+Exec=cosmic-pomodoro %F
 Terminal=false
 StartupNotify=true
 Categories=COSMIC

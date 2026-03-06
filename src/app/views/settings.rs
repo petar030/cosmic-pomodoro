@@ -26,7 +26,7 @@ pub(crate) fn view_settings<'a>(
             5,
             5,
             180,
-            |v| Message::Settings(SettingsMessage::SetWorkTime(v as u64)),
+            |v| Message::Settings(SettingsMessage::SetWorkTime(v)),
         ));
     let short_break_time_row = widget::row()
         .padding(0)
@@ -37,7 +37,7 @@ pub(crate) fn view_settings<'a>(
             1,
             1,
             60,
-            |v| Message::Settings(SettingsMessage::SetShortBreakTime(v as u64)),
+            |v| Message::Settings(SettingsMessage::SetShortBreakTime(v)),
         ));
     let long_break_time_row = widget::row()
         .padding(0)
@@ -48,7 +48,7 @@ pub(crate) fn view_settings<'a>(
             1,
             1,
             180,
-            |v| Message::Settings(SettingsMessage::SetLongBreakTime(v as u64)),
+            |v| Message::Settings(SettingsMessage::SetLongBreakTime(v)),
         ));
     let long_break_interval_row = widget::row()
         .padding(0)
@@ -59,7 +59,7 @@ pub(crate) fn view_settings<'a>(
             1,
             1,
             10,
-            |v| Message::Settings(SettingsMessage::SetLongBreakInterval(v as u64)),
+            |v| Message::Settings(SettingsMessage::SetLongBreakInterval(v)),
         ));
 
     let content_list = widget::column()

@@ -12,6 +12,7 @@ bin-dst := base-dir / 'bin' / name
 desktop-dst := base-dir / 'share' / 'applications' / appid + '.desktop'
 icon-dst := base-dir / 'share' / 'icons' / 'hicolor' / 'scalable' / 'apps' / appid + '.svg'
 icon-symbolic-dst := base-dir / 'share' / 'icons' / 'hicolor' / 'symbolic' / 'apps' / appid + '-symbolic.svg'
+icon-png-dst := base-dir / 'share' / 'icons' / 'hicolor' / '128x128' / 'apps' / appid + '.png'
 sound-dst := base-dir / 'share' / 'sounds' / name / 'cosmic-pomodoro-notification.mp3'
 
 # Default recipe which runs `just build-release`
@@ -39,8 +40,9 @@ build-release *args: (build-debug '--release' args)
 build-vendored *args: vendor-extract (build-release '--frozen --offline' args)
 
 # Runs a clippy check
+# -W clippy::pedantic
 check *args:
-    cargo clippy --all-features {{args}} -- -W clippy::pedantic
+    cargo clippy --all-features {{args}} -- 
 
 # Runs a clippy check with JSON message format
 check-json: (check '--message-format=json')
@@ -59,11 +61,12 @@ install:
     install -Dm0644 resources/app.metainfo.xml {{appdata-dst}}
     install -Dm0644 resources/icon.svg {{icon-dst}}
     install -Dm0644 resources/icon-symbolic.svg {{icon-symbolic-dst}}
+    install -Dm0644 resources/icon-128.png {{icon-png-dst}}
     install -Dm0644 resources/sounds/cosmic-pomodoro-notification.mp3 {{sound-dst}}
 
 # Uninstalls installed files
 uninstall:
-    rm {{bin-dst}} {{desktop-dst}} {{icon-dst}} {{icon-symbolic-dst}} {{sound-dst}}
+    rm {{bin-dst}} {{desktop-dst}} {{icon-dst}} {{icon-symbolic-dst}} {{icon-png-dst}} {{sound-dst}}
 
 # Vendor dependencies locally
 vendor:

@@ -4,7 +4,7 @@ version = "0.1.0"
 edition = "2024"
 license = "MPL-2.0"
 description = "Simple Pomodoro applet for Cosmic Desktop"
-repository = "https://github.com/pop-os/cosmic-app-template"
+repository = "https://github.com/petar030/cosmic-pomodoro"
 
 [dependencies]
 futures-util = "0.3.31"

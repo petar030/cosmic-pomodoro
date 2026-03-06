@@ -6,9 +6,9 @@
   <name>Cosmic Pomodoro</name>
   <summary>Simple Pomodoro applet for Cosmic Desktop</summary>
   <icon type="remote" width="64" height="64" scale="1">
-    https://github.com/pop-os/cosmic-app-template/raw/main/resources/icons/hicolor/scalable/apps/icon.svg
+    https://github.com/petar030/cosmic-pomodoro/raw/main/resources/icon.svg
   </icon>
-  <url type="vcs-browser">https://github.com/pop-os/cosmic-app-template</url>
+  <url type="vcs-browser">https://github.com/petar030/cosmic-pomodoro</url>
   <launchable type="desktop-id">com.github.petar030.cosmic-pomodoro.desktop</launchable>
   <provides>
     <id>com.github.petar030.cosmic-pomodoro</id>

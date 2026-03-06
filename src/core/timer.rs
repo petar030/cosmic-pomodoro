@@ -37,16 +37,11 @@ impl Timer {
         }
     }
 
-    pub fn time_update(&mut self) -> (){
-        match self.state {
-            TimerState::Running => {
-                if (Instant::now() - self.start_time) >= self.time_left{
-                    self.finish();
-                }
-            },
-            _ => {
-
-            }
+    pub fn time_update(&mut self) {
+        if let TimerState::Running = self.state
+            && (Instant::now() - self.start_time) >= self.time_left
+        {
+            self.finish();
         }
     }
 
@@ -78,8 +73,8 @@ impl Timer {
             TimerState::Running => {
                 self.pause_time = Instant::now();
 
-                if self.time_left > (self.pause_time - self.start_time){
-                    self.time_left = self.time_left - (self.pause_time - self.start_time);
+                if self.time_left > (self.pause_time - self.start_time) {
+                    self.time_left -= self.pause_time - self.start_time;
                 }
                 else {
                     self.time_left = Duration::from_secs(0);
@@ -139,6 +134,6 @@ impl Timer {
         }
         return (0, self.state, self.my_type);
        }
-       return (self.time_left.as_secs(), self.state, self.my_type);
+       (self.time_left.as_secs(), self.state, self.my_type)
     }
 }

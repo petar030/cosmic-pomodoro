@@ -11,4 +11,5 @@ debian/*
 !debian/copyright
 !debian/install
 !debian/rules
-!debian/source
+!debian/source*.dsc
+*.tar.xz

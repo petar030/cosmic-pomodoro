@@ -27,14 +27,14 @@ impl Pomodoro {
         }
         timers.push(Timer::new(long_break_time, TimerType::Break));
 
-        return Pomodoro {
+        Pomodoro {
             auto_start_work: asw,
             auto_start_break: asb,
-            timers: timers,
+            timers,
             cycle_count: 0,
             timer_pointer: 0,
             started: false,
-        };
+        }
     }
 
     pub fn update_and_return_state(&mut self) -> Option<(u64, TimerState, TimerType, bool, usize, u32)> {
@@ -79,7 +79,7 @@ impl Pomodoro {
             ));
         }
 
-        return None;
+        None
     }
 
     pub fn start(&mut self) {

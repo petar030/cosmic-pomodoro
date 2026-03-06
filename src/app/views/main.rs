@@ -84,7 +84,7 @@ pub(crate) fn view_main<'a>(
     .class(cosmic::theme::Container::Transparent);
 
     let timer_text = widget::text(format_timer(remaining)).size(56);
-    let _cycle_text = widget::text(format!("Session: {}", cycle_count)).size(14);
+    let _cycle_text = widget::text(format!("Session: {cycle_count}")).size(14);
 
     let total_sessions = usize::try_from(config.long_break_interval)
         .ok()
@@ -95,11 +95,9 @@ pub(crate) fn view_main<'a>(
     let session_dots = (0..total_sessions).fold(
         widget::row().spacing(6).align_y(Alignment::Center),
         |row, index| {
-            let symbol = if index < active_index {
+            let symbol = if index <= active_index {
                 "●"
-            } else if index == active_index {
-                "●" //"◉"
-            } else {
+            }  else {
                 "○"
             };
 
@@ -160,7 +158,6 @@ pub(crate) fn view_main<'a>(
         .spacing(10)
         .align_x(Alignment::Center)
         .push(phase_row)
-      //  .push(cycle_text)
         .push(timer_text)
         .push(session_dots)
         .push(controls)
