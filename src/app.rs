@@ -11,19 +11,18 @@ use cosmic::widget::{self};
 use notify_rust::{Hint, Notification};
 use std::path::Path;
 use std::process::Command;
+use std::process::Stdio;
 use std::time::Duration;
 
 const NOTIFICATION_SOUND_PATH_DEV: &str =
-    concat!(env!("CARGO_MANIFEST_DIR"), "/resources/sounds/cosmic-pomodoro-notification.mp3");
+    concat!(env!("CARGO_MANIFEST_DIR"), "/resources/sounds/cosmic-pomodoro-notification.wav");
 const NOTIFICATION_SOUND_PATH_SYSTEM: &str =
-    "/usr/share/sounds/cosmic-pomodoro/cosmic-pomodoro-notification.mp3";
-const NOTIFICATION_ICON_PATH_DEV: &str =
-    concat!(env!("CARGO_MANIFEST_DIR"), "/resources/icon-128.png");
-const NOTIFICATION_ICON_PATH_SYSTEM: &str =
-    "/usr/share/icons/hicolor/128x128/apps/com.github.petar030.cosmic-pomodoro.png";
+    "/usr/share/sounds/cosmic-pomodoro/cosmic-pomodoro-notification.wav";
+const NOTIFICATION_SOUND_PATH_FLATPAK: &str =
+    "/app/share/sounds/cosmic-pomodoro/cosmic-pomodoro-notification.wav";
 const APPLET_ICON_PATH: &str = "resources/icon-symbolic.svg";
-const APP_ICON_NAME: &str = "com.github.petar030.cosmic-pomodoro";
-const APP_ICON_SYMBOLIC_NAME: &str = "com.github.petar030.cosmic-pomodoro-symbolic";
+const APP_ICON_SYMBOLIC_NAME: &str = "io.github.petar030.cosmic-pomodoro-symbolic";
+const APP_DESKTOP_ENTRY: &str = "io.github.petar030.cosmic-pomodoro.desktop";
 
 mod views;
 
@@ -130,45 +129,42 @@ impl PomodoroState {
         match (previous_timer_type, next_timer_type) {
             (Some(TimerType::Work), Some(TimerType::Break)) => {
                 let minutes = phase_duration_minutes.unwrap_or(0);
-                self.notify(&format!(
+                self.notify(
+                    "Break Session",
+                    &format!(
                     "Great work — take a well-earned {} minute break.",
                     minutes
-                ));
+                    ),
+                );
             }
             (Some(TimerType::Break), Some(TimerType::Work)) => {
                 let minutes = phase_duration_minutes.unwrap_or(0);
-                self.notify(&format!(
+                self.notify(
+                    "Focus Session",
+                    &format!(
                     "Break is over — let’s focus for {} minutes.",
                     minutes
-                ));
+                    ),
+                );
             }
             _ => {}
         }
     }
 
-    fn notify(&self, message: &str) {
-        let icon = Self::first_existing_path(&[
-            NOTIFICATION_ICON_PATH_DEV,
-            NOTIFICATION_ICON_PATH_SYSTEM,
-        ])
-        .unwrap_or_else(|| APP_ICON_NAME.to_string());
-
+    fn notify(&self, summary: &str, message: &str) {
         let _ = Notification::new()
             .appname("Cosmic Pomodoro")
-            .summary("Pomodoro")
+            .summary(summary)
             .body(message)
-            .icon(&icon)
-            .hint(Hint::DesktopEntry(APP_ICON_NAME.to_string()))
+            .hint(Hint::DesktopEntry(APP_DESKTOP_ENTRY.to_string()))
             .show();
 
         if let Some(sound_path) = Self::first_existing_path(&[
             NOTIFICATION_SOUND_PATH_DEV,
             NOTIFICATION_SOUND_PATH_SYSTEM,
+            NOTIFICATION_SOUND_PATH_FLATPAK,
         ]) {
-            let _ = Command::new("paplay")
-                .arg(&sound_path)
-                .spawn()
-                .or_else(|_| Command::new("aplay").arg(&sound_path).spawn());
+            Self::play_sound(&sound_path);
         }
     }
 
@@ -177,6 +173,35 @@ impl PomodoroState {
             .iter()
             .find(|candidate| Path::new(candidate).exists())
             .map(|candidate| (*candidate).to_string())
+    }
+
+    fn play_sound(sound_path: &str) {
+        if Command::new("canberra-gtk-play")
+            .arg("-i")
+            .arg("complete")
+            .stdout(Stdio::null())
+            .stderr(Stdio::null())
+            .spawn()
+            .is_ok()
+        {
+            return;
+        }
+
+        if Command::new("paplay")
+            .arg(sound_path)
+            .stdout(Stdio::null())
+            .stderr(Stdio::null())
+            .spawn()
+            .is_ok()
+        {
+            return;
+        }
+
+        let _ = Command::new("aplay")
+            .arg(sound_path)
+            .stdout(Stdio::null())
+            .stderr(Stdio::null())
+            .spawn();
     }
 
 }
@@ -221,7 +246,7 @@ impl cosmic::Application for AppModel {
     type Flags = ();
     type Message = Message;
 
-    const APP_ID: &'static str = "com.github.petar030.cosmic-pomodoro";
+    const APP_ID: &'static str = "io.github.petar030.cosmic-pomodoro";
 
     fn core(&self) -> &cosmic::Core {
         &self.core
@@ -304,8 +329,8 @@ impl cosmic::Application for AppModel {
             .push(panel_phase_icon)
             .push(
                 widget::progress_bar(0.0..=1.0, progress)
-                    .height(Length::Fixed(2.0))
-                    .width(Length::Fixed(16.0)),
+                    .girth(Length::Fixed(2.0))
+                    .length(Length::Fixed(16.0)),
             );
 
         self.core
@@ -463,7 +488,7 @@ impl cosmic::Application for AppModel {
         Task::none()
     }
 
-    fn style(&self) -> Option<cosmic::iced_runtime::Appearance> {
+    fn style(&self) -> Option<cosmic::iced::theme::Style> {
         Some(cosmic::applet::style())
     }
 }

@@ -1,92 +1,99 @@
 name := 'cosmic-pomodoro'
-appid := 'com.github.petar030.cosmic-pomodoro'
+appid := 'io.github.petar030.cosmic-pomodoro'
+manifest := appid + '.json'
+branch := 'master'
 
 rootdir := ''
 prefix := '/usr'
+flatpak-prefix := '/app'
 
-# Installation paths
 base-dir := absolute_path(clean(rootdir / prefix))
+flatpak-base-dir := absolute_path(clean(rootdir / flatpak-prefix))
 cargo-target-dir := env('CARGO_TARGET_DIR', 'target')
-appdata-dst := base-dir / 'share' / 'appdata' / appid + '.metainfo.xml'
-bin-dst := base-dir / 'bin' / name
-desktop-dst := base-dir / 'share' / 'applications' / appid + '.desktop'
-icon-dst := base-dir / 'share' / 'icons' / 'hicolor' / 'scalable' / 'apps' / appid + '.svg'
-icon-symbolic-dst := base-dir / 'share' / 'icons' / 'hicolor' / 'symbolic' / 'apps' / appid + '-symbolic.svg'
-icon-png-dst := base-dir / 'share' / 'icons' / 'hicolor' / '128x128' / 'apps' / appid + '.png'
-sound-dst := base-dir / 'share' / 'sounds' / name / 'cosmic-pomodoro-notification.mp3'
 
-# Default recipe which runs `just build-release`
+bin-src := cargo-target-dir / 'release' / name
+bin-dst := base-dir / 'bin' / name
+flatpak-bin-dst := flatpak-base-dir / 'bin' / name
+
+desktop-src := 'resources' / 'app.desktop'
+desktop-dst := base-dir / 'share' / 'applications' / appid + '.desktop'
+flatpak-desktop-dst := flatpak-base-dir / 'share' / 'applications' / appid + '.desktop'
+
+metainfo-src := 'resources' / 'app.metainfo.xml'
+metainfo-dst := base-dir / 'share' / 'metainfo' / appid + '.metainfo.xml'
+flatpak-metainfo-dst := flatpak-base-dir / 'share' / 'metainfo' / appid + '.metainfo.xml'
+
+icon-src := 'resources' / 'icon.svg'
+icon-dst := base-dir / 'share' / 'icons' / 'hicolor' / 'scalable' / 'apps' / appid + '.svg'
+flatpak-icon-dst := flatpak-base-dir / 'share' / 'icons' / 'hicolor' / 'scalable' / 'apps' / appid + '.svg'
+
+icon-symbolic-src := 'resources' / 'icon-symbolic.svg'
+icon-symbolic-dst := base-dir / 'share' / 'icons' / 'hicolor' / 'symbolic' / 'apps' / appid + '-symbolic.svg'
+flatpak-icon-symbolic-dst := flatpak-base-dir / 'share' / 'icons' / 'hicolor' / 'symbolic' / 'apps' / appid + '-symbolic.svg'
+
+icon-png-src := 'resources' / 'icon-128.png'
+icon-png-dst := base-dir / 'share' / 'icons' / 'hicolor' / '128x128' / 'apps' / appid + '.png'
+flatpak-icon-png-dst := flatpak-base-dir / 'share' / 'icons' / 'hicolor' / '128x128' / 'apps' / appid + '.png'
+
+sound-src := 'resources' / 'sounds' / 'cosmic-pomodoro-notification.wav'
+sound-dst := base-dir / 'share' / 'sounds' / name / 'cosmic-pomodoro-notification.wav'
+flatpak-sound-dst := flatpak-base-dir / 'share' / 'sounds' / name / 'cosmic-pomodoro-notification.wav'
+
 default: build-release
 
-# Runs `cargo clean`
 clean:
     cargo clean
 
-# Removes vendored dependencies
-clean-vendor:
-    rm -rf .cargo vendor vendor.tar
-
-# `cargo clean` and removes vendored dependencies
-clean-dist: clean clean-vendor
-
-# Compiles with debug profile
 build-debug *args:
     cargo build {{args}}
 
-# Compiles with release profile
 build-release *args: (build-debug '--release' args)
 
-# Compiles release profile with vendored dependencies
-build-vendored *args: vendor-extract (build-release '--frozen --offline' args)
-
-# Runs a clippy check
-# -W clippy::pedantic
 check *args:
-    cargo clippy --all-features {{args}} -- 
+    cargo clippy --all-features {{args}} -- -W clippy::pedantic
 
-# Runs a clippy check with JSON message format
 check-json: (check '--message-format=json')
 
-# Run the application for testing purposes
 run *args:
     env RUST_BACKTRACE=full cargo run --release {{args}}
 
-run-software *args:
-    env RUST_BACKTRACE=full WGPU_BACKEND=gl LIBGL_ALWAYS_SOFTWARE=1 cargo run --release {{args}}
-
-# Installs files
 install:
-    install -Dm0755 {{ cargo-target-dir / 'release' / name }} {{bin-dst}}
-    install -Dm0644 resources/app.desktop {{desktop-dst}}
-    install -Dm0644 resources/app.metainfo.xml {{appdata-dst}}
-    install -Dm0644 resources/icon.svg {{icon-dst}}
-    install -Dm0644 resources/icon-symbolic.svg {{icon-symbolic-dst}}
-    install -Dm0644 resources/icon-128.png {{icon-png-dst}}
-    install -Dm0644 resources/sounds/cosmic-pomodoro-notification.mp3 {{sound-dst}}
+    install -Dm0755 {{bin-src}} {{bin-dst}}
+    install -Dm0644 {{desktop-src}} {{desktop-dst}}
+    install -Dm0644 {{metainfo-src}} {{metainfo-dst}}
+    install -Dm0644 {{icon-src}} {{icon-dst}}
+    install -Dm0644 {{icon-symbolic-src}} {{icon-symbolic-dst}}
+    install -Dm0644 {{icon-png-src}} {{icon-png-dst}}
+    install -Dm0644 {{sound-src}} {{sound-dst}}
 
-# Uninstalls installed files
+flatpak-install:
+    install -Dm0755 {{bin-src}} {{flatpak-bin-dst}}
+    install -Dm0644 {{desktop-src}} {{flatpak-desktop-dst}}
+    install -Dm0644 {{metainfo-src}} {{flatpak-metainfo-dst}}
+    install -Dm0644 {{icon-src}} {{flatpak-icon-dst}}
+    install -Dm0644 {{icon-symbolic-src}} {{flatpak-icon-symbolic-dst}}
+    install -Dm0644 {{icon-png-src}} {{flatpak-icon-png-dst}}
+    install -Dm0644 {{sound-src}} {{flatpak-sound-dst}}
+
 uninstall:
-    rm {{bin-dst}} {{desktop-dst}} {{icon-dst}} {{icon-symbolic-dst}} {{icon-png-dst}} {{sound-dst}}
+    rm -f {{bin-dst}} {{desktop-dst}} {{metainfo-dst}} {{icon-dst}} {{icon-symbolic-dst}} {{icon-png-dst}} {{sound-dst}}
 
-# Vendor dependencies locally
-vendor:
-    mkdir -p .cargo
-    cargo vendor --sync Cargo.toml | head -n -1 > .cargo/config.toml
-    echo 'directory = "vendor"' >> .cargo/config.toml
-    echo >> .cargo/config.toml
-    rm -rf .cargo vendor
+flatpak-cargo-sources:
+    if [ ! -d .venv ]; then python3 -m venv .venv; fi
+    ./.venv/bin/pip install --quiet aiohttp toml
+    ./.venv/bin/python ./flatpak/flatpak-cargo-generator.py ./Cargo.lock -o ./cargo-sources.json
 
-# Extracts vendored dependencies
-vendor-extract:
-    rm -rf vendor
-    tar pxf vendor.tar
+flatpak-builder:
+    flatpak run org.flatpak.Builder \
+        --force-clean \
+        --verbose \
+        --ccache \
+        --user \
+        --install \
+        --install-deps-from=flathub \
+        --repo=repo \
+        flatpak-out \
+        {{manifest}}
 
-# Bump cargo version, create git commit, and create tag
-tag version:
-    find -type f -name Cargo.toml -exec sed -i '0,/^version/s/^version.*/version = "{{version}}"/' '{}' \; -exec git add '{}' \;
-    cargo check
-    cargo clean
-    git add Cargo.lock
-    git commit -m 'release: {{version}}'
-    git tag -a {{version}} -m ''
-
+flatpak-bundle:
+    flatpak build-bundle repo {{appid}}-{{branch}}.flatpak {{appid}} {{branch}}

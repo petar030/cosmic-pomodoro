@@ -20,15 +20,13 @@ features = ["fluent-system", "desktop-requester"]
 # Važno: minimalna konfiguracija + pin na isti commit kao u Minimon-u
 [dependencies.libcosmic]
 git = "https://github.com/pop-os/libcosmic.git"
-rev = "beddbf17703728182395a13267954d839226331d"
 default-features = false
 features = [
     "applet",
     "applet-token",
 ]
 
-# (Opcionalno) Release podešavanja kao kod Minimon-a, za manji otisak i brži rad
-#[profile.release]
-#lto = "thin"
-#opt-level = 3
-#debug = false
+[profile.release]
+lto = "thin"
+opt-level = 3
+debug = false

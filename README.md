@@ -30,6 +30,9 @@ Useful commands:
 - `just install` – install binary + desktop metadata + icons + sound
 - `just uninstall` – remove installed files
 - `just check` – run clippy
+- `just flatpak-cargo-sources` – regenerate Flatpak cargo source list
+- `just flatpak-builder` – local Flatpak build + install
+- `just flatpak-bundle` – generate `io.github.petar030.cosmic-pomodoro-master.flatpak`
 
 ## Install (system)
 

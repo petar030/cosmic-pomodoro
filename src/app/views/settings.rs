@@ -86,7 +86,7 @@ pub(crate) fn view_settings<'a>(
                         .push(
                             widget::toggler(config.auto_start_work)
                                 .spacing(10)
-                                .label("Auto start work timer")
+                                .label("Auto start work timer".to_string())
                                 .size(15)
                                 .on_toggle(|v| {
                                     Message::Settings(SettingsMessage::SetAutoStartWork(v))
@@ -95,7 +95,7 @@ pub(crate) fn view_settings<'a>(
                         .push(
                             widget::toggler(config.auto_start_break)
                                 .spacing(10)
-                                .label("Auto start break timer")
+                                .label("Auto start break timer".to_string())
                                 .size(15)
                                 .on_toggle(|v| {
                                     Message::Settings(SettingsMessage::SetAutoStartBreak(v))

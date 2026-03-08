@@ -1,17 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <component type="desktop-application">
-  <id>com.github.petar030.cosmic-pomodoro</id>
+  <id>io.github.petar030.cosmic-pomodoro</id>
   <metadata_license>CC0-1.0</metadata_license>
   <project_license>MPL-2.0</project_license>
   <name>Cosmic Pomodoro</name>
   <summary>Simple Pomodoro applet for Cosmic Desktop</summary>
-  <icon type="remote" width="64" height="64" scale="1">
-    https://github.com/petar030/cosmic-pomodoro/raw/main/resources/icon.svg
-  </icon>
+  <description>
+    <p>
+      Cosmic Pomodoro is a focused work timer applet for COSMIC Desktop with
+      configurable work, short break, and long break intervals.
+    </p>
+    <p>
+      It provides panel integration, localized UI, and desktop notifications
+      with optional sound alerts for seamless pomodoro cycles.
+    </p>
+  </description>
+  <icon type="stock">io.github.petar030.cosmic-pomodoro</icon>
   <url type="vcs-browser">https://github.com/petar030/cosmic-pomodoro</url>
-  <launchable type="desktop-id">com.github.petar030.cosmic-pomodoro.desktop</launchable>
+  <launchable type="desktop-id">io.github.petar030.cosmic-pomodoro.desktop</launchable>
   <provides>
-    <id>com.github.petar030.cosmic-pomodoro</id>
+    <id>io.github.petar030.cosmic-pomodoro</id>
     <binaries>
       <binary>cosmic-pomodoro</binary>
     </binaries>
@@ -32,4 +40,3 @@
   </keywords>
   <content_rating type="oars-1.1" />
 </component>
-

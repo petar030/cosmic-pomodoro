@@ -43,9 +43,9 @@ pub(crate) fn view_main<'a>(
         widget::row()
             .width(Length::Fill)
             .align_y(Alignment::Center)
-            .push(widget::horizontal_space())
+            .push(widget::space::horizontal())
             .push(widget::icon::from_name("alarm-symbolic").size(16).icon())
-            .push(widget::horizontal_space()),
+            .push(widget::space::horizontal()),
     )
     .width(Length::FillPortion(1))
     .padding(6)
@@ -64,9 +64,9 @@ pub(crate) fn view_main<'a>(
         widget::row()
             .width(Length::Fill)
             .align_y(Alignment::Center)
-            .push(widget::horizontal_space())
+            .push(widget::space::horizontal())
             .push(break_icon_handle.icon().size(16))
-            .push(widget::horizontal_space()),
+            .push(widget::space::horizontal()),
     )
     .width(Length::FillPortion(1))
     .padding(6)
@@ -129,9 +129,9 @@ pub(crate) fn view_main<'a>(
                 .icon_button("view-refresh-symbolic")
                 .on_press(Message::RestartPomodoro),
         )
-        .push(widget::horizontal_space())
+        .push(widget::space::horizontal())
         .push(center_button)
-        .push(widget::horizontal_space())
+        .push(widget::space::horizontal())
         .push(
             core.applet
                 .icon_button("media-skip-forward-symbolic")
@@ -143,13 +143,13 @@ pub(crate) fn view_main<'a>(
     } else {
         widget::row()
             .width(Length::Fill)
-            .push(widget::horizontal_space())
+            .push(widget::space::horizontal())
             .push(
                 widget::button::text("Configure")
                     .on_press(Message::OpenSettingsView)
                     .padding([2, 8]),
             )
-            .push(widget::horizontal_space())
+            .push(widget::space::horizontal())
     };
 
     let content_list = widget::column()

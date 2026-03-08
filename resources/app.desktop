@@ -2,8 +2,8 @@
 Name=Cosmic Pomodoro
 Comment=Simple Pomodoro applet for Cosmic Desktop
 Type=Application
-Icon=com.github.petar030.cosmic-pomodoro
-Exec=cosmic-pomodoro %F
+Icon=io.github.petar030.cosmic-pomodoro-symbolic
+Exec=cosmic-pomodoro
 Terminal=false
 StartupNotify=true
 Categories=COSMIC
