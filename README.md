@@ -19,6 +19,27 @@ Latest Flatpak bundle:
 - **Direct download (.flatpak):**  
   https://github.com/petar030/cosmic-pomodoro/releases/download/v0.1.0-flatpak-20260308/io.github.petar030.cosmic-pomodoro-master.flatpak
 
+### Install (user scope)
+
+> **Important:** Use the command below exactly as shown.  
+> Run it **from the directory where the `.flatpak` bundle is located** (e.g. your project root or `~/Downloads`).
+
+```sh
+flatpak install --user -y ./io.github.petar030.cosmic-pomodoro-master.flatpak
+```
+
+### Add the applet to the COSMIC panel
+
+Open COSMIC panel settings and add **Cosmic Pomodoro** to your panel’s applets list.  
+After adding, the indicator appears in the panel.
+
+### Uninstall
+
+```sh
+flatpak uninstall --user io.github.petar030.cosmic-pomodoro
+```
+
+
 
 ## Features
 
