@@ -3,9 +3,10 @@
 A minimal, distraction-free Pomodoro applet for the COSMIC desktop.
 
 ## About
-Cosmic Pomodoro is a small and simple pomodoro timer made for the COSMIC desktop.
-It shows a basic work/break cycle, uses native COSMIC components, and keeps the interface minimal.
-The goal is just to provide a straightforward pomodoro timer integrated with COSMIC desktop.
+Cosmic Pomodoro is a small and simple pomodoro timer made for the COSMIC desktop.  
+It is fully based on libcosmic and follows the COSMIC system theme, using native components so it blends naturally into the desktop.  
+It shows a basic work/break cycle and keeps the interface minimal.  
+The goal is just to provide a straightforward pomodoro timer integrated with the COSMIC desktop.
 
 
 
