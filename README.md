@@ -3,9 +3,10 @@
 A minimal, distraction-free Pomodoro applet for the COSMIC desktop.
 
 ## About
-Cosmic Pomodoro is a small, straightforward pomodoro timer designed to fit naturally into the COSMIC desktop.
-It provides a clear work/break cycle, simple controls, and a clean interface without distractions.  
-The focus is on staying consistent and keeping the workflow predictable, without adding extra features you don’t really need.
+Cosmic Pomodoro is a small and simple pomodoro timer made for the COSMIC desktop.
+It shows a basic work/break cycle, uses native COSMIC components, and keeps the interface minimal.
+The goal is just to provide a straightforward pomodoro timer integrated with COSMIC desktop.
+
 
 
 ## 🔽 Download
@@ -21,14 +22,12 @@ Latest Flatpak bundle:
 
 ## Features
 
-Cosmic Pomodoro is designed to feel perfectly at home inside the **COSMIC desktop** — fast, native, and fully theme‑aware.
+- Native COSMIC applet
+- Simple popup with work/break timer
+- Configurable session lengths
+- Panel indicator showing progress
+- Notifications with sound when a session ends
 
-- **Fully native COSMIC applet** — integrates cleanly with COSMIC panel and UI conventions  
-- **Automatic theme support** — adapts to system theme (light/dark, accent colors, community themes)
-- **Minimal, focused popup UI** — clean Work/Break indicator with zero clutter  
-- **Configurable durations** — customize work sessions, breaks, and long-break interval
-- **Lightweight panel indicator** — compact progress icon showing session progress
-- **Desktop notifications with sound cues** — sound is always played on session transitions
 
 ## Screenshots
 
