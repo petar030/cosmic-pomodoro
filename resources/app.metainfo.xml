@@ -4,7 +4,10 @@
   <metadata_license>CC0-1.0</metadata_license>
   <project_license>MPL-2.0</project_license>
   <project_group>COSMIC</project_group>
-  <developer_name>Petar Rančić</developer_name>
+  <developer id="io.github.petar030">
+    <name>Petar Rančić</name>
+  </developer>
+  <update_contact>petar030@users.noreply.github.com</update_contact>
   <name>Cosmic Pomodoro</name>
   <summary>Simple Pomodoro applet for COSMIC Desktop</summary>
   <description>
@@ -61,9 +64,7 @@
   </screenshots>
   <provides>
     <id>com.system76.CosmicApplet</id>
-    <binaries>
-      <binary>cosmic-pomodoro</binary>
-    </binaries>
+    <binary>cosmic-pomodoro</binary>
   </provides>
   <requires>
     <display_length compare="ge">360</display_length>
@@ -74,7 +75,6 @@
     <control>touch</control>
   </supports>
   <categories>
-    <category>COSMIC</category>
     <category>Utility</category>
   </categories>
   <keywords>
