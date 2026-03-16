@@ -6,7 +6,6 @@ pub struct Pomodoro {
     timers: Vec<Timer>,
     cycle_count: u32,
     timer_pointer: usize,
-    started: bool,
 }
 
 impl Pomodoro {
@@ -33,7 +32,6 @@ impl Pomodoro {
             timers,
             cycle_count: 0,
             timer_pointer: 0,
-            started: false,
         }
     }
 
@@ -49,7 +47,11 @@ impl Pomodoro {
                     remaining,
                     status,
                     timer_type,
-                    self.started,
+                    if matches!(status, TimerState::Created) {
+                        false
+                    } else {
+                        true
+                    },
                     session_count,
                     cycle_count,
                 ));
@@ -73,7 +75,11 @@ impl Pomodoro {
                 remaining,
                 status,
                 timer_type,
-                self.started,
+                if matches!(status, TimerState::Created) {
+                    false
+                } else {
+                    true
+                },
                 session_count,
                 cycle_count,
             ));
@@ -83,9 +89,6 @@ impl Pomodoro {
     }
 
     pub fn start(&mut self) {
-        if !self.started {
-            self.started = true;
-        }
         if let Some(current_timer) = self.timers.get_mut(self.timer_pointer) {
             let (_, status, _) = current_timer.get_current_status();
 

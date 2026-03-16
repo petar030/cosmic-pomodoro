@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: MPL-2.0
 
+use crate::config::Config;
 use crate::core::pomodoro::Pomodoro;
 use crate::core::timer::{TimerState, TimerType};
-use crate::config::Config;
 use cosmic::cosmic_config::{self, CosmicConfigEntry};
 use cosmic::iced::{Alignment, Length, Limits, Subscription, time, window::Id};
 use cosmic::iced_winit::commands::popup::{destroy_popup, get_popup};
@@ -14,8 +14,10 @@ use std::process::Command;
 use std::process::Stdio;
 use std::time::Duration;
 
-const NOTIFICATION_SOUND_PATH_DEV: &str =
-    concat!(env!("CARGO_MANIFEST_DIR"), "/resources/sounds/cosmic-pomodoro-notification.wav");
+const NOTIFICATION_SOUND_PATH_DEV: &str = concat!(
+    env!("CARGO_MANIFEST_DIR"),
+    "/resources/sounds/cosmic-pomodoro-notification.wav"
+);
 const NOTIFICATION_SOUND_PATH_SYSTEM: &str =
     "/usr/share/sounds/cosmic-pomodoro/cosmic-pomodoro-notification.wav";
 const NOTIFICATION_SOUND_PATH_FLATPAK: &str =
@@ -26,7 +28,6 @@ const APP_DESKTOP_ENTRY: &str = "io.github.petar030.cosmic-pomodoro.desktop";
 
 mod views;
 
-/// Dva pogleda (Main i Settings), kao u starom template-u.
 #[derive(Debug, Default, Clone, Copy, PartialEq, Eq)]
 enum PopupView {
     #[default]
@@ -34,7 +35,6 @@ enum PopupView {
     Settings,
 }
 
-/// Snapshot stanja koji vraća `update_and_return_state`.
 #[derive(Debug, Clone)]
 struct PomodoroTickState {
     remaining: u64,
@@ -70,7 +70,6 @@ impl Default for PomodoroTickState {
         }
     }
 }
-
 
 struct PomodoroState {
     pomodoro: Pomodoro,
@@ -131,20 +130,14 @@ impl PomodoroState {
                 let minutes = phase_duration_minutes.unwrap_or(0);
                 self.notify(
                     "Break Session",
-                    &format!(
-                    "Great work — take a well-earned {} minute break.",
-                    minutes
-                    ),
+                    &format!("Great work — take a well-earned {} minute break.", minutes),
                 );
             }
             (Some(TimerType::Break), Some(TimerType::Work)) => {
                 let minutes = phase_duration_minutes.unwrap_or(0);
                 self.notify(
                     "Focus Session",
-                    &format!(
-                    "Break is over — let’s focus for {} minutes.",
-                    minutes
-                    ),
+                    &format!("Break is over — let’s focus for {} minutes.", minutes),
                 );
             }
             _ => {}
@@ -203,10 +196,8 @@ impl PomodoroState {
             .stderr(Stdio::null())
             .spawn();
     }
-
 }
 
-/// Aplet model — stanje aplikacije.
 pub struct AppModel {
     core: cosmic::Core,
     popup: Option<Id>,
@@ -312,7 +303,10 @@ impl cosmic::Application for AppModel {
             .map_or(TimerType::Work, |s| s.timer_type);
 
         let panel_phase_icon: Element<'_, Message> = match timer_type {
-            TimerType::Work => widget::icon::from_name("alarm-symbolic").size(14).icon().into(),
+            TimerType::Work => widget::icon::from_name("alarm-symbolic")
+                .size(14)
+                .icon()
+                .into(),
             TimerType::Break => {
                 let mut break_icon_handle = widget::icon::from_svg_bytes(
                     include_bytes!("../resources/icons/coffee-symbolic.svg").as_slice(),

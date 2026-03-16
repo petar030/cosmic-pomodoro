@@ -20,3 +20,4 @@ target/
 /flatpak-out
 /.venv
 *.flatpak
+/.vscode

@@ -95,11 +95,7 @@ pub(crate) fn view_main<'a>(
     let session_dots = (0..total_sessions).fold(
         widget::row().spacing(6).align_y(Alignment::Center),
         |row, index| {
-            let symbol = if index <= active_index {
-                "●"
-            }  else {
-                "○"
-            };
+            let symbol = if index <= active_index { "●" } else { "○" };
 
             row.push(widget::text(symbol).size(12))
         },
