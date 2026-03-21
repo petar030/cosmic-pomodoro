@@ -1,6 +1,7 @@
 # Cosmic Pomodoro
 
 A minimal, distraction-free Pomodoro applet for the COSMIC desktop.
+![Main](img/Main.png)
 
 ## About
 Cosmic Pomodoro is a small and simple pomodoro timer made for the COSMIC desktop.  
@@ -10,9 +11,28 @@ The goal is just to provide a straightforward pomodoro timer integrated with the
 
 
 
-## 🔽 Download
 
-Latest Flatpak bundle:
+## 🔽 Download & Installation
+
+
+
+## 1) COSMIC Store (recommended)
+
+Cosmic Pomodoro is available for install directly in the **COSMIC Store** under  
+**Applets → Cosmic Pomodoro**.
+
+### Add the applet to the COSMIC panel
+
+Open COSMIC panel settings and add **Cosmic Pomodoro** to your panel’s applets list.  
+After adding, the indicator appears in the panel.
+
+---
+
+## 2) Manual Flatpak bundle (alternative)
+
+You can also install the `.flatpak` bundle manually.
+
+### Latest Release
 
 - **Release page:**  
   https://github.com/petar030/cosmic-pomodoro/releases/tag/v0.1.0-flatpak-20260308
@@ -22,11 +42,11 @@ Latest Flatpak bundle:
 
 ### Install (user scope)
 
-> **Important:** Use the command below exactly as shown.  
-> Run it **from the directory where the `.flatpak` bundle is located** (e.g. your project root or `~/Downloads`).
+> **Important:** Run the command from the same folder where the `.flatpak` file is located  
+> (e.g. your project root or `~/Downloads`).
 
 ```sh
-flatpak install --user -y ./io.github.petar030.cosmic-pomodoro-master.flatpak
+flatpak install --user -y ./io.github.petar030.cosmic-pomodoro-master.flatpakl --user -y ./io.github.petar030.cosmic-pomodoro-master.flatpak
 ```
 
 ### Add the applet to the COSMIC panel
@@ -55,13 +75,14 @@ flatpak uninstall --user io.github.petar030.cosmic-pomodoro
 
 | Theme | Preview |
 |---|---|
-| Pop!_OS Classic | ![PopOsClassic](img/PopOsClassic.png) |
 | Catppuccin | ![Catppuccin](img/Catpuccin.png) |
 | Tokyo Night | ![TokyoNight](img/TokyoNight.png) |
 | Gruvbox Dark | ![GruvboxDark](img/GruvboxDark.png) |
 | Gruvbox Light | ![GruvboxLight](img/GruvboxLight.png) |
+| Pop!_OS Classic | ![PopOsClassic](img/PopOsClassic.png) |
 | Mono Dark | ![MonoDark](img/MonoDark.png) |
 | Settings | ![Config](img/Config.png) |
+
 
 
 ## Requirements
