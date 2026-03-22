@@ -289,6 +289,7 @@ impl cosmic::Application for AppModel {
                 icon_handle.symbolic = true;
                 self.core.applet.icon_button_from_handle(icon_handle)
             } else {
+                println!("Failed to load applet icon from path, falling back to symbolic name");
                 self.core.applet.icon_button(APP_ICON_SYMBOLIC_NAME)
             };
 
