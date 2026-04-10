@@ -7,7 +7,9 @@
   <developer_name>Petar Rančić</developer_name>
   <update_contact>petar030@users.noreply.github.com</update_contact>
   <name>Cosmic Pomodoro</name>
+  <name xml:lang="uk">Cosmic Помідоро</name>
   <summary>Simple Pomodoro applet for COSMIC Desktop</summary>
+  <summary xml:lang="uk">Простий віджет таймера Помідоро для COSMIC</summary>
   <description>
     <p>
       Cosmic Pomodoro is a minimal and distraction-free Pomodoro applet for
@@ -16,6 +18,16 @@
     <p>
       It provides configurable work, short break, and long break intervals,
       panel integration, localized UI, and subtle notifications.
+    </p>
+  </description>
+  <description xml:lang="uk">
+    <p>
+      Cosmic Помідоро, це простий і ненав’язливий віджет таймера помідора 
+      для середовища COSMIC.
+    </p>
+    <p>
+      Дає змогу налаштовувати час роботи, короткі та довгі перерви, інтегрується 
+      з панеллю, має локалізований інтерфейс і приємні сповіщення.
     </p>
   </description>
   <icon type="stock">io.github.petar030.cosmic-pomodoro</icon>
