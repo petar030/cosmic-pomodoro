@@ -40,7 +40,7 @@ pub(crate) fn view_main<'a>(
     };
 
     let work_segment = widget::container(
-        widget::row()
+        widget::row([])
             .width(Length::Fill)
             .align_y(Alignment::Center)
             .push(widget::space::horizontal())
@@ -61,7 +61,7 @@ pub(crate) fn view_main<'a>(
     break_icon_handle.symbolic = true;
 
     let break_segment = widget::container(
-        widget::row()
+        widget::row([])
             .width(Length::Fill)
             .align_y(Alignment::Center)
             .push(widget::space::horizontal())
@@ -73,7 +73,7 @@ pub(crate) fn view_main<'a>(
     .class(break_class);
 
     let phase_row = widget::container(
-        widget::row()
+        widget::row([])
             .width(Length::Fill)
             .spacing(4)
             .push(work_segment)
@@ -93,7 +93,7 @@ pub(crate) fn view_main<'a>(
     let active_index = session_count.min(total_sessions.saturating_sub(1));
 
     let session_dots = (0..total_sessions).fold(
-        widget::row().spacing(6).align_y(Alignment::Center),
+        widget::row([]).spacing(6).align_y(Alignment::Center),
         |row, index| {
             let symbol = if index <= active_index { "●" } else { "○" };
 
@@ -115,7 +115,7 @@ pub(crate) fn view_main<'a>(
     .on_press(center_action)
     .width(Length::Fixed(156.0));
 
-    let controls = widget::row()
+    let controls = widget::row([])
         .width(Length::Fill)
         .padding(0)
         .spacing(8)
@@ -135,9 +135,9 @@ pub(crate) fn view_main<'a>(
         );
 
     let settings_row = if started {
-        widget::row().width(Length::Fill)
+        widget::row([]).width(Length::Fill)
     } else {
-        widget::row()
+        widget::row([])
             .width(Length::Fill)
             .push(widget::space::horizontal())
             .push(
@@ -148,7 +148,7 @@ pub(crate) fn view_main<'a>(
             .push(widget::space::horizontal())
     };
 
-    let content_list = widget::column()
+    let content_list = widget::column([])
         .width(Length::Fill)
         .padding(0)
         .spacing(10)

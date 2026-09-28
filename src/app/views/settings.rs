@@ -11,13 +11,13 @@ pub(crate) fn view_settings<'a>(
     _id: Id,
     config: &'a Config,
 ) -> Element<'a, Message> {
-    let header = widget::row().padding(2).spacing(0).push(
+    let header = widget::row([]).padding(2).spacing(0).push(
         core.applet
             .icon_button("go-previous-symbolic")
             .on_press(Message::BackToMainView),
     );
 
-    let work_time_row = widget::row()
+    let work_time_row = widget::row([])
         .padding(0)
         .spacing(0)
         .push(widget::spin_button(
@@ -28,7 +28,7 @@ pub(crate) fn view_settings<'a>(
             180,
             |v| Message::Settings(SettingsMessage::SetWorkTime(v)),
         ));
-    let short_break_time_row = widget::row()
+    let short_break_time_row = widget::row([])
         .padding(0)
         .spacing(0)
         .push(widget::spin_button(
@@ -39,7 +39,7 @@ pub(crate) fn view_settings<'a>(
             60,
             |v| Message::Settings(SettingsMessage::SetShortBreakTime(v)),
         ));
-    let long_break_time_row = widget::row()
+    let long_break_time_row = widget::row([])
         .padding(0)
         .spacing(0)
         .push(widget::spin_button(
@@ -50,7 +50,7 @@ pub(crate) fn view_settings<'a>(
             180,
             |v| Message::Settings(SettingsMessage::SetLongBreakTime(v)),
         ));
-    let long_break_interval_row = widget::row()
+    let long_break_interval_row = widget::row([])
         .padding(0)
         .spacing(0)
         .push(widget::spin_button(
@@ -62,13 +62,13 @@ pub(crate) fn view_settings<'a>(
             |v| Message::Settings(SettingsMessage::SetLongBreakInterval(v)),
         ));
 
-    let content_list = widget::column()
+    let content_list = widget::column([])
         .width(Length::Fill)
         .padding(0)
         .spacing(10)
         .push(header)
         .push(
-            widget::column()
+            widget::column([])
                 .width(Length::Fill)
                 .align_x(Alignment::Center)
                 .spacing(16)
@@ -81,7 +81,7 @@ pub(crate) fn view_settings<'a>(
                 .push(widget::text("Long break interval").size(15))
                 .push(long_break_interval_row)
                 .push(
-                    widget::column()
+                    widget::column([])
                         .spacing(12)
                         .push(
                             widget::toggler(config.auto_start_work)
@@ -102,7 +102,7 @@ pub(crate) fn view_settings<'a>(
                                 }),
                         ),
                 )
-                .push(widget::row().spacing(10).push(core.applet.text_button(
+                .push(widget::row([]).spacing(10).push(core.applet.text_button(
                     "Reset to default settings",
                     Message::Settings(SettingsMessage::ResetToDefault),
                 ))),

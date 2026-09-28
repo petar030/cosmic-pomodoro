@@ -132,7 +132,14 @@ def fetch_git_repo(git_url: str, commit: str) -> str:
     )
     head = rev_parse_proc.stdout.decode().strip()
     if head[:COMMIT_LEN] != commit[:COMMIT_LEN]:
-        subprocess.run(["git", "fetch", "origin", commit], cwd=clone_dir, check=True)
+        # Fetch the requested revision before updating its submodules. The
+        # current checkout may reference a submodule commit no longer hosted
+        # upstream, which would otherwise make this fetch fail prematurely.
+        subprocess.run(
+            ["git", "-c", "fetch.recurseSubmodules=false", "fetch", "origin", commit],
+            cwd=clone_dir,
+            check=True,
+        )
         try:
             subprocess.run(["git", "checkout", commit], cwd=clone_dir, check=True)
         except subprocess.CalledProcessError:

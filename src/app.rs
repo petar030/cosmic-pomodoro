@@ -4,8 +4,8 @@ use crate::config::Config;
 use crate::core::pomodoro::Pomodoro;
 use crate::core::timer::{TimerState, TimerType};
 use cosmic::cosmic_config::{self, CosmicConfigEntry};
+use cosmic::iced::platform_specific::shell::wayland::commands::popup::{destroy_popup, get_popup};
 use cosmic::iced::{Alignment, Length, Limits, Subscription, time, window::Id};
-use cosmic::iced_winit::commands::popup::{destroy_popup, get_popup};
 use cosmic::prelude::*;
 use cosmic::widget::{self};
 use notify_rust::{Hint, Notification};
@@ -333,15 +333,15 @@ impl cosmic::Application for AppModel {
             }
         };
 
-        let panel_content = widget::column()
+        let panel_content = widget::column([])
             .width(Length::Fixed(18.0))
             .align_x(Alignment::Center)
             .spacing(1)
             .push(panel_phase_icon)
             .push(
-                widget::progress_bar(0.0..=1.0, progress)
+                widget::determinate_linear(progress)
                     .girth(Length::Fixed(2.0))
-                    .length(Length::Fixed(16.0)),
+                    .width(Length::Fixed(16.0)),
             );
 
         self.core
