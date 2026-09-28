@@ -297,23 +297,39 @@ impl cosmic::Application for AppModel {
         }
 
         let progress = self.panel_progress_fraction();
+        let timer_state = self
+            .pomodoro_state
+            .last_tick_state
+            .as_ref()
+            .map_or(TimerState::Created, |s| s.timer_state);
+
         let timer_type = self
             .pomodoro_state
             .last_tick_state
             .as_ref()
             .map_or(TimerType::Work, |s| s.timer_type);
 
-        let panel_phase_icon: Element<'_, Message> = match timer_type {
-            TimerType::Work => widget::icon::from_name("alarm-symbolic")
+        let panel_phase_icon: Element<'_, Message> = if matches!(
+            timer_state,
+            TimerState::Paused | TimerState::Created
+        ) {
+            widget::icon::from_name("media-playback-pause-symbolic")
                 .size(14)
                 .icon()
-                .into(),
-            TimerType::Break => {
-                let mut break_icon_handle = widget::icon::from_svg_bytes(
-                    include_bytes!("../resources/icons/coffee-symbolic.svg").as_slice(),
-                );
-                break_icon_handle.symbolic = true;
-                break_icon_handle.icon().size(14).into()
+                .into()
+        } else {
+            match timer_type {
+                TimerType::Work => widget::icon::from_name("alarm-symbolic")
+                    .size(14)
+                    .icon()
+                    .into(),
+                TimerType::Break => {
+                    let mut break_icon_handle = widget::icon::from_svg_bytes(
+                        include_bytes!("../resources/icons/coffee-symbolic.svg").as_slice(),
+                    );
+                    break_icon_handle.symbolic = true;
+                    break_icon_handle.icon().size(14).into()
+                }
             }
         };
 
