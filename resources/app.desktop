@@ -1,6 +1,6 @@
 [Desktop Entry]
 Name=Pomodoro Applet
-Comment=A Pomodoro timer applet for the COSMIC desktop
+Comment=A Pomodoro timer applet for the COSMIC™ desktop
 Type=Application
 Icon=io.github.petar030.cosmic-pomodoro-symbolic
 Exec=cosmic-pomodoro

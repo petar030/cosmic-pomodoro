@@ -1,13 +1,13 @@
 # Pomodoro Applet
 
-A minimal, distraction-free Pomodoro timer applet for the COSMIC desktop.
+A minimal, distraction-free Pomodoro timer applet for the COSMIC™ desktop.
 ![Main](img/Main.png)
 
 ## About
-Pomodoro Applet is a small and simple timer made for the COSMIC desktop.
-It is fully based on libcosmic and follows the COSMIC system theme, using native components so it blends naturally into the desktop.  
+Pomodoro Applet is a small and simple timer made for the COSMIC™ desktop.
+It is fully based on libcosmic and follows the COSMIC™ system theme, using native components so it blends naturally into the desktop.
 It shows a basic work/break cycle and keeps the interface minimal.  
-The goal is just to provide a straightforward pomodoro timer integrated with the COSMIC desktop.
+The goal is just to provide a straightforward pomodoro timer integrated with the COSMIC™ desktop.
 
 
 
@@ -16,14 +16,14 @@ The goal is just to provide a straightforward pomodoro timer integrated with the
 
 
 
-## 1) COSMIC Store (recommended)
+## 1) COSMIC™ Store (recommended)
 
 After the Store update, Pomodoro Applet will be available directly in the
-**COSMIC Store** under **Applets → Pomodoro Applet**.
+**COSMIC™ Store** under **Applets → Pomodoro Applet**.
 
-### Add the applet to the COSMIC panel
+### Add the applet to the COSMIC™ panel
 
-Open COSMIC panel settings and add **Pomodoro Applet** to your panel’s applets list.
+Open COSMIC™ panel settings and add **Pomodoro Applet** to your panel’s applets list.
 After adding, the indicator appears in the panel.
 
 ---
@@ -49,9 +49,9 @@ You can also install the `.flatpak` bundle manually.
 flatpak install --user -y ./io.github.petar030.cosmic-pomodoro-master.flatpak
 ```
 
-### Add the applet to the COSMIC panel
+### Add the applet to the COSMIC™ panel
 
-Open COSMIC panel settings and add **Pomodoro Applet** to your panel’s applets list.
+Open COSMIC™ panel settings and add **Pomodoro Applet** to your panel’s applets list.
 After adding, the indicator appears in the panel.
 
 ### Uninstall
@@ -90,7 +90,7 @@ flatpak uninstall --user io.github.petar030.cosmic-pomodoro
 - Rust (`cargo`)
 - https://github.com/casey/just
 - `flatpak` + `org.flatpak.Builder`
-- COSMIC session for full applet integration testing
+- COSMIC™ session for full applet integration testing
 
 
 ## Local development
@@ -102,7 +102,7 @@ just run
 
 ## Flatpak build (local)
 
-This project is prepared for the **COSMIC Flatpak ecosystem** (not Flathub-specific metadata/process).
+This project is prepared for the **COSMIC™ Flatpak ecosystem** (not Flathub-specific metadata/process).
 
 ```sh
 # 1) Regenerate cargo sources used by manifest
@@ -128,4 +128,3 @@ io.github.petar030.cosmic-pomodoro-master.flatpak
 ```sh
 flatpak run io.github.petar030.cosmic-pomodoro
 ```
-

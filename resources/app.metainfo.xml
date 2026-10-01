@@ -7,15 +7,15 @@
   <update_contact>petar030@users.noreply.github.com</update_contact>
   <name>Pomodoro Applet</name>
   <name xml:lang="uk">Аплет Помідоро</name>
-  <summary>A Pomodoro timer applet for the COSMIC desktop</summary>
-  <summary xml:lang="uk">Аплет таймера Помідоро для середовища COSMIC</summary>
+  <summary>A Pomodoro timer applet for the COSMIC™ desktop</summary>
+  <summary xml:lang="uk">Аплет таймера Помідоро для середовища COSMIC™</summary>
   <description>
     <p>
-      Pomodoro Applet is a minimal, distraction-free timer for the COSMIC desktop
+      Pomodoro Applet is a minimal, distraction-free timer for the COSMIC™ desktop
       that helps you focus through timed work and break sessions.
     </p>
     <p xml:lang="uk">
-      Аплет Помідоро — простий і ненав’язливий таймер для середовища COSMIC.
+      Аплет Помідоро — простий і ненав’язливий таймер для середовища COSMIC™.
     </p>
     <p>
       It provides configurable work, short break, and long break intervals,
