@@ -1,4 +1,4 @@
-app-title = Cosmic Pomodoro
+app-title = Pomodoro Applet
 about = About
 view = View
 welcome = Welcome to COSMIC! ✨

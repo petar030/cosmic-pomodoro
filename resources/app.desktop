@@ -1,13 +1,13 @@
 [Desktop Entry]
-Name=Cosmic Pomodoro
-Comment=Simple Pomodoro applet for Cosmic Desktop
+Name=Pomodoro Applet
+Comment=A Pomodoro timer applet for the COSMIC desktop
 Type=Application
 Icon=io.github.petar030.cosmic-pomodoro-symbolic
 Exec=cosmic-pomodoro
 Terminal=false
 StartupNotify=true
-Categories=COSMIC
-Keywords=COSMIC
+Categories=Utility;
+Keywords=Pomodoro;Timer;Productivity;COSMIC;
 NoDisplay=true
 X-CosmicApplet=true
 X-CosmicHoverPopup=Auto

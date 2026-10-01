@@ -3,30 +3,26 @@
   <id>io.github.petar030.cosmic-pomodoro</id>
   <metadata_license>CC0-1.0</metadata_license>
   <project_license>MPL-2.0</project_license>
-  <project_group>COSMIC</project_group>
   <developer_name>Petar Rančić</developer_name>
   <update_contact>petar030@users.noreply.github.com</update_contact>
-  <name>Cosmic Pomodoro</name>
-  <name xml:lang="uk">Cosmic Помідоро</name>
-  <summary>Simple Pomodoro applet for COSMIC Desktop</summary>
-  <summary xml:lang="uk">Простий віджет таймера Помідоро для COSMIC</summary>
+  <name>Pomodoro Applet</name>
+  <name xml:lang="uk">Аплет Помідоро</name>
+  <summary>A Pomodoro timer applet for the COSMIC desktop</summary>
+  <summary xml:lang="uk">Аплет таймера Помідоро для середовища COSMIC</summary>
   <description>
     <p>
-      Cosmic Pomodoro is a minimal and distraction-free Pomodoro applet for
-      the COSMIC desktop.
+      Pomodoro Applet is a minimal, distraction-free timer for the COSMIC desktop
+      that helps you focus through timed work and break sessions.
+    </p>
+    <p xml:lang="uk">
+      Аплет Помідоро — простий і ненав’язливий таймер для середовища COSMIC.
     </p>
     <p>
       It provides configurable work, short break, and long break intervals,
       panel integration, localized UI, and subtle notifications.
     </p>
-  </description>
-  <description xml:lang="uk">
-    <p>
-      Cosmic Помідоро, це простий і ненав’язливий віджет таймера помідора 
-      для середовища COSMIC.
-    </p>
-    <p>
-      Дає змогу налаштовувати час роботи, короткі та довгі перерви, інтегрується 
+    <p xml:lang="uk">
+      Дає змогу налаштовувати час роботи, короткі та довгі перерви, інтегрується
       з панеллю, має локалізований інтерфейс і приємні сповіщення.
     </p>
   </description>
@@ -44,27 +40,27 @@
     </screenshot>
     <screenshot>
       <image>https://raw.githubusercontent.com/petar030/cosmic-pomodoro/master/img/PopOsClassic.png</image>
-      <caption>Cosmic Pomodoro applet in Pop!_OS Classic theme.</caption>
+      <caption>Pomodoro Applet in Pop!_OS Classic theme.</caption>
     </screenshot>
     <screenshot>
       <image>https://raw.githubusercontent.com/petar030/cosmic-pomodoro/master/img/Catpuccin.png</image>
-      <caption>Cosmic Pomodoro applet in Catppuccin theme.</caption>
+      <caption>Pomodoro Applet in Catppuccin theme.</caption>
     </screenshot>
     <screenshot>
       <image>https://raw.githubusercontent.com/petar030/cosmic-pomodoro/master/img/TokyoNight.png</image>
-      <caption>Cosmic Pomodoro applet in Tokyo Night theme.</caption>
+      <caption>Pomodoro Applet in Tokyo Night theme.</caption>
     </screenshot>
     <screenshot>
       <image>https://raw.githubusercontent.com/petar030/cosmic-pomodoro/master/img/GruvboxDark.png</image>
-      <caption>Cosmic Pomodoro applet in Gruvbox Dark theme.</caption>
+      <caption>Pomodoro Applet in Gruvbox Dark theme.</caption>
     </screenshot>
     <screenshot>
       <image>https://raw.githubusercontent.com/petar030/cosmic-pomodoro/master/img/GruvboxLight.png</image>
-      <caption>Cosmic Pomodoro applet in Gruvbox Light theme.</caption>
+      <caption>Pomodoro Applet in Gruvbox Light theme.</caption>
     </screenshot>
     <screenshot>
       <image>https://raw.githubusercontent.com/petar030/cosmic-pomodoro/master/img/MonoDark.png</image>
-      <caption>Cosmic Pomodoro applet in Mono Dark theme.</caption>
+      <caption>Pomodoro Applet in Mono Dark theme.</caption>
     </screenshot>
     <screenshot>
       <image>https://raw.githubusercontent.com/petar030/cosmic-pomodoro/master/img/Config.png</image>
@@ -98,7 +94,7 @@
     <release version="0.1.0" date="2026-03-08">
       <url type="details">https://github.com/petar030/cosmic-pomodoro/releases/tag/v0.1.0-flatpak-20260308</url>
       <description>
-        <p>Initial public Flatpak release of Cosmic Pomodoro.</p>
+        <p>Initial public Flatpak release of the applet.</p>
       </description>
     </release>
   </releases>

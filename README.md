@@ -1,10 +1,10 @@
-# Cosmic Pomodoro
+# Pomodoro Applet
 
-A minimal, distraction-free Pomodoro applet for the COSMIC desktop.
+A minimal, distraction-free Pomodoro timer applet for the COSMIC desktop.
 ![Main](img/Main.png)
 
 ## About
-Cosmic Pomodoro is a small and simple pomodoro timer made for the COSMIC desktop.  
+Pomodoro Applet is a small and simple timer made for the COSMIC desktop.
 It is fully based on libcosmic and follows the COSMIC system theme, using native components so it blends naturally into the desktop.  
 It shows a basic work/break cycle and keeps the interface minimal.  
 The goal is just to provide a straightforward pomodoro timer integrated with the COSMIC desktop.
@@ -18,12 +18,12 @@ The goal is just to provide a straightforward pomodoro timer integrated with the
 
 ## 1) COSMIC Store (recommended)
 
-Cosmic Pomodoro is available for install directly in the **COSMIC Store** under  
-**Applets → Cosmic Pomodoro**.
+After the Store update, Pomodoro Applet will be available directly in the
+**COSMIC Store** under **Applets → Pomodoro Applet**.
 
 ### Add the applet to the COSMIC panel
 
-Open COSMIC panel settings and add **Cosmic Pomodoro** to your panel’s applets list.  
+Open COSMIC panel settings and add **Pomodoro Applet** to your panel’s applets list.
 After adding, the indicator appears in the panel.
 
 ---
@@ -46,12 +46,12 @@ You can also install the `.flatpak` bundle manually.
 > (e.g. your project root or `~/Downloads`).
 
 ```sh
-flatpak install --user -y ./io.github.petar030.cosmic-pomodoro-master.flatpakl --user -y ./io.github.petar030.cosmic-pomodoro-master.flatpak
+flatpak install --user -y ./io.github.petar030.cosmic-pomodoro-master.flatpak
 ```
 
 ### Add the applet to the COSMIC panel
 
-Open COSMIC panel settings and add **Cosmic Pomodoro** to your panel’s applets list.  
+Open COSMIC panel settings and add **Pomodoro Applet** to your panel’s applets list.
 After adding, the indicator appears in the panel.
 
 ### Uninstall
@@ -128,6 +128,4 @@ io.github.petar030.cosmic-pomodoro-master.flatpak
 ```sh
 flatpak run io.github.petar030.cosmic-pomodoro
 ```
-
-
 

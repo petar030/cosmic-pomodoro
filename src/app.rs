@@ -146,7 +146,7 @@ impl PomodoroState {
 
     fn notify(&self, summary: &str, message: &str) {
         let _ = Notification::new()
-            .appname("Cosmic Pomodoro")
+            .appname("Pomodoro Applet")
             .summary(summary)
             .body(message)
             .hint(Hint::DesktopEntry(APP_DESKTOP_ENTRY.to_string()))

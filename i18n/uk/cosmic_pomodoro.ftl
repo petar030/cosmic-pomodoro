@@ -1,4 +1,4 @@
-app-title = COSMIC Помідоро
+app-title = Аплет Помідоро
 about = Про віджет
 view = Вид
 welcome = Ласкаво просимо до COSMIC! ✨
