@@ -24,6 +24,7 @@ features = [
     "applet",
     "applet-token",
     "dbus-config",
+    "xdg-portal",
 ]
 
 [profile.release]
